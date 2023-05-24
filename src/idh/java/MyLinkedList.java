@@ -11,14 +11,33 @@ public class MyLinkedList<T> implements List<T> {
 
 	ListElement prefirst = new ListElement(null);
 	
+	private class ListElement {
+		T value;
+		ListElement next;
+		
+		ListElement(T value) {
+			this.value = value;
+		}
+		
+		public int size() {
+			if (this.next == null) {
+				return 0;
+			} else {
+				return next.size() + 1;
+			}
+		}
+	}
+	
+
 	
 	@Override
 	public int size() {
-		// TODO Implement!
-		int i = 0;
-		for (T x : this)
-			i++;
-		return i;
+		return prefirst.size();
+//		// TODO Implement!
+//		int i = 0;
+//		for (T x : this)
+//			i++;
+//		return i;
 	}
 
 	@Override
@@ -303,15 +322,6 @@ public class MyLinkedList<T> implements List<T> {
 		b.append(']');
 		return b.toString();
 		
-	}
-	
-	private class ListElement {
-		T value;
-		ListElement next;
-		
-		ListElement(T value) {
-			this.value = value;
-		}
 	}
 	
 	/**

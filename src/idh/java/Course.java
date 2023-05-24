@@ -1,30 +1,34 @@
 package idh.java;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
 import idh.java.util.NameGenerator;
 
 public class Course implements Iterable<Student> {
-	Student[] members;
+	 // Student[] members;
+	Map<String, Student> kvMembers = new HashMap<String, Student>();
 	
 	int nextPosition = 0;
 	String name;
 
 
 	public Course(String name, int numberOfStudents) {
-		this.members = new Student[numberOfStudents];
+		// this.members = new Student[numberOfStudents];
 		this.name = name;
 	}
 	
 	public void addMember(Student student) throws Exception {
-		if (nextPosition < members.length)
-			members[nextPosition++] = student;
-		else
-			throw new Exception("Class full");
+//		if (nextPosition < members.length)
+//			members[nextPosition++] = student;
+//		else
+//			throw new Exception("Class full");
+		kvMembers.put(student.getName(), student);
 	}
 	
 	
@@ -33,11 +37,19 @@ public class Course implements Iterable<Student> {
 	}
 	
 	public int size() {
-		return members.length;
+		return kvMembers.size();
+	}
+	
+	public Student getMember(String name) {
+		return kvMembers.get(name);
 	}
 	
 	public Student getMember(int member) {
-		return members[member];
+		for (Student s : kvMembers.values()) {
+			if (s.matrikelNummer == member)
+				return s;
+		}
+		return null;
 	}
 	
 	public String getName() {
@@ -48,10 +60,7 @@ public class Course implements Iterable<Student> {
 		this.name = name;
 	}
 	
-	public boolean isFull() {
-		return nextPosition >= members.length;
-	}
-
+	
 	@Override
 	public Iterator<Student> iterator() {
 		return new StudentIterator(this);
@@ -63,6 +72,7 @@ public class Course implements Iterable<Student> {
 		
 		Course course = new Course("Java 7", 30);
 		
+		course.addMember(new Student(ng.getName(), 0));
 	}
 
 }
